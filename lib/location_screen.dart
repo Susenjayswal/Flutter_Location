@@ -1,13 +1,14 @@
 //new code
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'member.dart';
 import 'route_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   final Member member;
 
-  LocationScreen({required this.member});
+  const LocationScreen({super.key, required this.member});
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -15,7 +16,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   List<LatLng> visitedLocations = [];
   DateTime selectedDate = DateTime.now();
 
@@ -29,9 +30,10 @@ class _LocationScreenState extends State<LocationScreen> {
   // Initialize visited locations (for demo purposes)
   void _initializeLocations() {
     visitedLocations = [
-      LatLng(37.42796133580664, -122.085749655962),
-      LatLng(37.42996133580664, -122.083749655962),
-      LatLng(37.42696133580664, -122.080749655962),
+      const LatLng(37.42796133580661, -122.085749655962),
+      const LatLng(37.42996133580662, -122.083749655962),
+      const LatLng(37.42696133580663, -122.080749655962),
+      const LatLng(37.42696133580664, -122.080749655962),
     ];
   }
 
@@ -43,7 +45,7 @@ class _LocationScreenState extends State<LocationScreen> {
           Marker(
             markerId: MarkerId(location.toString()),
             position: location,
-            infoWindow: InfoWindow(title: 'Visited Location'),
+            infoWindow: const InfoWindow(title: 'Visited Location'),
           ),
         );
       }
@@ -95,7 +97,7 @@ class _LocationScreenState extends State<LocationScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () => _selectDate(context),
-                  child: Text('Select Date'),
+                  child: const Text('Select Date'),
                 ),
                 Text("Selected Date: ${selectedDate.toLocal()}".split(' ')[0]),
               ],
@@ -110,7 +112,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   title: Text('Visited Location ${index + 1}'),
                   subtitle: Text(
                       'Lat: ${visitedLocations[index].latitude}, Lng: ${visitedLocations[index].longitude}'),
-                  trailing: Icon(Icons.directions),
+                  trailing: const Icon(Icons.directions),
                   onTap: () {
                     // Navigate to route screen
                     Navigator.push(

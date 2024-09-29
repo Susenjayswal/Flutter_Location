@@ -8,7 +8,7 @@ class RouteScreen extends StatefulWidget {
   final LatLng startLocation;
   final LatLng stopLocation;
 
-  RouteScreen({required this.startLocation, required this.stopLocation});
+  const RouteScreen({super.key, required this.startLocation, required this.stopLocation});
 
   @override
   _RouteScreenState createState() => _RouteScreenState();
@@ -16,8 +16,8 @@ class RouteScreen extends StatefulWidget {
 
 class _RouteScreenState extends State<RouteScreen> {
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
-  Set<Polyline> _polylines = {};
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
   List<LatLng> routePoints = [];
   double totalKMs = 0.0;
 
@@ -33,15 +33,15 @@ class _RouteScreenState extends State<RouteScreen> {
   void _createMarkers() {
     setState(() {
       _markers.add(Marker(
-        markerId: MarkerId('start'),
+        markerId: const MarkerId('start'),
         position: widget.startLocation,
-        infoWindow: InfoWindow(title: 'Start Location'),
+        infoWindow: const InfoWindow(title: 'Start Location'),
       ));
 
       _markers.add(Marker(
-        markerId: MarkerId('stop'),
+        markerId: const MarkerId('stop'),
         position: widget.stopLocation,
-        infoWindow: InfoWindow(title: 'Stop Location'),
+        infoWindow: const InfoWindow(title: 'Stop Location'),
       ));
     });
   }
@@ -56,14 +56,14 @@ class _RouteScreenState extends State<RouteScreen> {
     );
 
     if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+      for (var point in result.points) {
         routePoints.add(LatLng(point.latitude, point.longitude));
-      });
+      }
     }
 
     setState(() {
       _polylines.add(Polyline(
-        polylineId: PolylineId('route'),
+        polylineId: const PolylineId('route'),
         visible: true,
         points: routePoints,
         color: Colors.blue,
@@ -87,7 +87,7 @@ class _RouteScreenState extends State<RouteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Route Details"),
+        title: const Text("Route Details"),
       ),
       body: Column(
         children: [
@@ -114,7 +114,7 @@ class _RouteScreenState extends State<RouteScreen> {
                 Text('Stop Location: (${widget.stopLocation.latitude}, ${widget.stopLocation.longitude})'),
                 Text('Total Distance: ${totalKMs.toStringAsFixed(2)} KM'),
                 // TODO: Calculate total duration based on start and stop time
-                Text('Total Duration: 30 mins'), // Placeholder
+                const Text('Total Duration: 30 mins'), // Placeholder
               ],
             ),
           ),
